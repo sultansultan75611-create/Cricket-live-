@@ -1,68 +1,42 @@
-require("dotenv").config();
-const express = require("express");
-const path = require("path");
+import express from "express";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const API_KEY = process.env.CRICKET_API_KEY;
+const API_KEY = process.env.CRICKETDATA_API_KEY;
 const API_BASE = "https://api.cricapi.com/v1";
+app.use(express.static("public"));
 
-app.use(express.static(path.join(__dirname, "public")));
-
-async function cricketApi(endpoint, params = {}) {
-  if (!API_KEY) {
-    const error = new Error("API key is not configured. Add CRICKET_API_KEY to your .env file.");
-    error.status = 503;
-    throw error;
-  }
-
+async function providerRequest(endpoint, extra = {}) {
+  if (!API_KEY) throw Object.assign(new Error("Missing CRICKETDATA_API_KEY. Add it to .env."), { status: 503 });
   const url = new URL(`${API_BASE}/${endpoint}`);
   url.searchParams.set("apikey", API_KEY);
-  for (const [key, value] of Object.entries(params)) {
-    if (value !== undefined && value !== null && value !== "") {
-      url.searchParams.set(key, String(value));
-    }
-  }
-
-  const response = await fetch(url, { headers: { "Accept": "application/json" } });
-  if (!response.ok) {
-    const error = new Error(`Cricket provider returned HTTP ${response.status}`);
-    error.status = response.status;
-    throw error;
-  }
-
-  const payload = await response.json();
-  if (payload.status === "failure" || payload.status === "error") {
-    const error = new Error(payload.reason || payload.message || "Cricket API request failed");
-    error.status = 502;
-    throw error;
-  }
-  return payload;
+  url.searchParams.set("offset", "0");
+  for (const [key, value] of Object.entries(extra)) url.searchParams.set(key, value);
+  const response = await fetch(url, { headers: { Accept: "application/json" } });
+  if (!response.ok) throw Object.assign(new Error(`Provider HTTP ${response.status}`), { status: 502 });
+  const json = await response.json();
+  if (json.status && json.status !== "success") throw Object.assign(new Error(json.reason || "Provider API error"), { status: 502 });
+  return json;
 }
 
-app.get("/api/matches", async (req, res) => {
+app.get("/api/matches", async (_req, res) => {
   try {
-    const data = await cricketApi("currentMatches", { offset: req.query.offset || 0 });
+    const json = await providerRequest("currentMatches");
     res.set("Cache-Control", "no-store");
-    res.json(data);
-  } catch (error) {
-    res.status(error.status || 500).json({ error: error.message });
-  }
+    res.json({ matches: Array.isArray(json.data) ? json.data : [], source: "Cricket Data API" });
+  } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
 });
 
-app.get("/api/match/:id", async (req, res) => {
+app.get("/api/scorecard/:matchId", async (req, res) => {
   try {
-    const data = await cricketApi("match_info", { id: req.params.id });
-    res.json(data);
-  } catch (error) {
-    res.status(error.status || 500).json({ error: error.message });
-  }
+    if (!/^[A-Za-z0-9_-]+$/.test(req.params.matchId)) return res.status(400).json({ error: "Invalid match ID." });
+    const json = await providerRequest("match_scorecard", { id: req.params.matchId });
+    res.set("Cache-Control", "no-store");
+    res.json(json);
+  } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
 });
 
-app.get("/api/health", (_req, res) => {
-  res.json({ ok: true, apiKeyConfigured: Boolean(API_KEY) });
-});
-
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Cricket Live is running on port ${PORT}`);
-});
+app.get("/api/health", (_req, res) => res.json({ ok: true, apiKeyConfigured: Boolean(API_KEY) }));
+app.listen(PORT, () => console.log(`Cricket Live running at http://localhost:${PORT}`));

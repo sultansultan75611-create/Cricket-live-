@@ -1,99 +1,18 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#08131f">
-  <meta name="description" content="Live cricket scores, match updates and scorecards.">
-  <title>Boundary — Live Cricket</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="topline"></div>
-  <header class="site-header">
-    <a class="brand" href="#" aria-label="Boundary home">
-      <span class="brand-mark">B</span><span>BOUNDARY<span class="brand-dot">.</span></span>
-    </a>
-    <nav class="main-nav" aria-label="Main navigation">
-      <a class="nav-link active" href="#scores">Scores</a>
-      <a class="nav-link" href="#scores" data-filter-link="live">Live</a>
-      <a class="nav-link" href="#scores" data-filter-link="upcoming">Upcoming</a>
-      <a class="nav-link" href="#scores" data-filter-link="completed">Results</a>
-    </nav>
-    <div class="header-right">
-      <span class="live-indicator"><i></i> LIVE CENTER</span>
-      <button class="icon-button" id="refreshBtn" title="Refresh scores" aria-label="Refresh scores">↻</button>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow"><span class="eyebrow-line"></span> THE GAME, IN REAL TIME</p>
-        <h1>Every run.<br><span>Every moment.</span></h1>
-        <p class="hero-sub">Your home for live cricket scores, match updates and results from around the world.</p>
-        <a class="hero-cta" href="#scores">Explore matches <span>↘</span></a>
-      </div>
-      <div class="hero-art" aria-hidden="true">
-        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-        <div class="ball"><span></span></div>
-        <div class="art-caption">FOLLOW<br>THE GAME</div>
-        <div class="art-number">01<span>/</span>LIVE</div>
-      </div>
-    </section>
-
-    <section class="ticker" aria-label="Cricket updates">
-      <span class="ticker-label"><i></i> SCOREBOARD</span>
-      <span class="ticker-text">The latest matches, all in one place</span>
-      <span class="ticker-date" id="todayLabel">—</span>
-    </section>
-
-    <section class="scores-section" id="scores">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">DON'T MISS A BALL</p>
-          <h2>Match centre<span class="green-period">.</span></h2>
-        </div>
-        <div class="update-note"><span class="pulse"></span><span id="lastUpdated">Connecting to live scores…</span></div>
-      </div>
-
-      <div class="toolbar">
-        <div class="filter-tabs" role="group" aria-label="Filter matches">
-          <button class="filter-tab active" data-filter="all">All matches</button>
-          <button class="filter-tab" data-filter="live">Live</button>
-          <button class="filter-tab" data-filter="upcoming">Upcoming</button>
-          <button class="filter-tab" data-filter="completed">Results</button>
-        </div>
-        <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search teams or series…" autocomplete="off"></label>
-      </div>
-
-      <div id="errorBox" class="notice error hidden" role="alert"></div>
-      <div id="loadingBox" class="loading-state"><span class="spinner"></span><p>Fetching the latest matches…</p></div>
-      <div id="emptyBox" class="empty-state hidden"><div class="empty-icon">🏏</div><h3>No matches found</h3><p>Try another filter or check back later.</p></div>
-      <div id="matchesGrid" class="matches-grid"></div>
-      <div class="section-foot"><span>DATA POWERED BY CRICKETDATA</span><span>Scores refresh automatically every 60 seconds</span></div>
-    </section>
-
-    <section class="feature-strip">
-      <div><span class="feature-icon">◎</span><h3>Live updates</h3><p>Follow match status and score changes.</p></div>
-      <div><span class="feature-icon">▤</span><h3>Match details</h3><p>Open a match for its available scorecard information.</p></div>
-      <div><span class="feature-icon">◷</span><h3>Always current</h3><p>Refresh scores whenever you need them.</p></div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <a class="brand footer-brand" href="#"><span class="brand-mark">B</span><span>BOUNDARY<span class="brand-dot">.</span></span></a>
-    <p>Made for the love of cricket.</p>
-    <span>© <span id="year"></span> BOUNDARY</span>
-  </footer>
-
-  <dialog id="matchDialog" class="match-dialog">
-    <div class="dialog-head"><span class="eyebrow">MATCH DETAILS</span><button id="closeDialog" class="icon-button" aria-label="Close">×</button></div>
-    <div id="dialogContent"><p>Loading match details…</p></div>
-  </dialog>
-  <script src="app.js"></script>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#071521"><title>Cricket Live</title>
+<style>
+:root{--bg:#071521;--panel:#102333;--line:#244052;--text:#edf5fa;--muted:#9bb0bf;--green:#36d399;--gold:#f4c76b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,sans-serif}.wrap{max-width:1100px;margin:auto;padding:0 20px}header{border-bottom:1px solid var(--line);position:sticky;top:0;background:#071521ee}nav{height:68px;display:flex;align-items:center;justify-content:space-between}.brand{font-size:21px;font-weight:900}.brand b{color:var(--green)}.status{font-size:11px;color:var(--green);font-weight:900}main{padding:30px 0 55px}.eyebrow{color:var(--green);font-size:11px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase}h1{font-size:clamp(30px,5vw,42px);margin:6px 0}.muted{color:var(--muted)}.top{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:22px}.grid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}.panel{background:linear-gradient(145deg,var(--panel),#0c1d2a);border:1px solid var(--line);border-radius:16px;overflow:hidden}.panelhead{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center}.panelhead h2{font-size:16px;margin:0}.match{padding:18px;border-bottom:1px solid var(--line);cursor:pointer}.match:hover{background:#132b3b}.meta{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:var(--muted)}.live{color:var(--green);font-weight:900}.teams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;margin:16px 0}.team{font-weight:800}.team:last-child{text-align:right}.score{text-align:center;font-size:21px;font-weight:900}.score small{display:block;color:var(--muted);font-size:11px}.summary{font-size:12px;color:var(--muted)}.side,.content{padding:18px}.line{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}.line:last-child{border:0}.empty{padding:26px;text-align:center;color:var(--muted)}table{width:100%;border-collapse:collapse;min-width:400px;font-size:13px;margin-bottom:18px}td,th{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}th{color:var(--muted)}.notice{margin-top:16px;padding:13px 15px;border:1px solid #345063;border-radius:12px;color:#c5d5df;font-size:12px}.notice b{color:var(--gold)}footer{padding:20px 0;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}@media(max-width:760px){.grid{grid-template-columns:1fr}.top{align-items:start;flex-direction:column}.wrap{padding:0 14px}.score{font-size:17px}.match{padding:15px}}
+</style></head><body><header><nav class="wrap"><div class="brand">🏏 CRICKET <b>LIVE</b></div><div class="status" id="connection">CONNECTING…</div></nav></header>
+<main class="wrap"><div class="top"><div><div class="eyebrow">Live cricket centre</div><h1>Every run matters.</h1><div class="muted">Live scores, match details and scorecards.</div></div><div class="muted" id="updated">Waiting for API…</div></div>
+<div class="grid"><section class="panel"><div class="panelhead"><h2>Current matches</h2><span class="muted" id="count">—</span></div><div id="matches"><div class="empty">Loading cricket data…</div></div></section><aside class="panel"><div class="panelhead"><h2>Match centre</h2><span class="muted">Selected match</span></div><div class="side" id="centre"><div class="empty">Select a match.</div></div></aside></div>
+<section class="panel" style="margin-top:18px"><div class="panelhead"><h2>Scorecard</h2><span class="muted" id="scoretitle">Choose a match</span></div><div class="content" id="scorecard"><div class="empty">Select a match above.</div></div></section>
+<div class="notice"><b>Data source:</b> Cricket Data API. If the provider is unavailable or your quota is reached, this page shows an error rather than a made-up score.</div></main><footer><div class="wrap">© 2026 Cricket Live</div></footer>
+<script>
+const REFRESH_MS=20*60*1000;let matches=[],selected=null;const $=s=>document.querySelector(s);
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function scoreText(m){return (Array.isArray(m.score)?m.score:[]).map(s=>`${esc(s.r??"—")}/${esc(s.w??"—")}<small>${esc(s.o??"—")} ov</small>`).join("<br>")||"Score pending";}
+function render(){ $("#count").textContent=matches.length+" matches";$("#matches").innerHTML=matches.length?matches.map((m,i)=>`<article class="match" data-index="${i}"><div class="meta"><span>${esc((m.matchType||"CRICKET").toUpperCase())} · ${esc(m.venue||"Venue TBC")}</span><span class="${/live|innings|stumps/i.test(m.status||"")?"live":""}">${esc(m.status||"Scheduled")}</span></div><div class="teams"><div class="team">${esc(m.teams?.[0]||"Team 1")}</div><div class="score">${scoreText(m)}</div><div class="team">${esc(m.teams?.[1]||"Team 2")}</div></div><div class="summary">${esc(m.name||"Match")} · ${esc(m.date||"")}</div></article>`).join(""):'<div class="empty">No current matches returned.</div>';if(matches.length&&!selected)selectMatch(0);}
+function selectMatch(i){selected=matches[i];$("#centre").innerHTML=`<div style="font-weight:800;margin-bottom:8px">${esc(selected.name||"Match details")}</div><div class="line"><span>Status</span><b>${esc(selected.status||"—")}</b></div><div class="line"><span>Venue</span><span>${esc(selected.venue||"—")}</span></div><div class="line"><span>Format</span><span>${esc(selected.matchType||"—")}</span></div><div class="line"><span>Date</span><span>${esc(selected.dateTimeGMT||selected.date||"—")}</span></div>`;$("#scoretitle").textContent=selected.name||"Selected match";loadScorecard(selected.id);}
+async function loadMatches(){try{const r=await fetch("/api/matches",{cache:"no-store"}),j=await r.json();if(!r.ok)throw Error(j.error||"Could not load matches");matches=j.matches||[];selected=null;$("#connection").textContent="● API CONNECTED";$("#updated").textContent="Updated "+new Date().toLocaleTimeString();render();}catch(e){$("#connection").textContent="API UNAVAILABLE";$("#matches").innerHTML=`<div class="empty">${esc(e.message)}<br><br>Check the API key and server setup.</div>`;$("#updated").textContent="No live data";}}
+async function loadScorecard(id){if(!id){$("#scorecard").innerHTML='<div class="empty">No match ID supplied by provider.</div>';return;}$("#scorecard").innerHTML='<div class="empty">Loading scorecard…</div>';try{const r=await fetch("/api/scorecard/"+encodeURIComponent(id)),j=await r.json();if(!r.ok)throw Error(j.error||"Scorecard unavailable");const d=j.data||j,rows=Array.isArray(d.scorecard)?d.scorecard:Array.isArray(d.score)?d.score:[];if(!rows.length){$("#scorecard").innerHTML='<div class="empty">Detailed scorecard not available for this match.</div>';return;}$("#scorecard").innerHTML=rows.map(inn=>{const bat=inn.batting||inn.batsmen||[],bowl=inn.bowling||inn.bowlers||[];return `<h3>${esc(inn.inning||inn.innings||"Innings")}</h3><table><thead><tr><th>Batter</th><th>Runs</th><th>Balls</th><th>4s</th><th>6s</th></tr></thead><tbody>${bat.map(p=>`<tr><td>${esc(p.batsman?.name||p.name||p.batsman||"—")}</td><td>${esc(p.r??p.runs??"—")}</td><td>${esc(p.b??p.balls??"—")}</td><td>${esc(p["4s"]??p.fours??"—")}</td><td>${esc(p["6s"]??p.sixes??"—")}</td></tr>`).join("")||'<tr><td colspan="5">Batting details unavailable</td></tr>'}</tbody></table>${bowl.length?`<h4>Bowling</h4><table><thead><tr><th>Bowler</th><th>Overs</th><th>Runs</th><th>Wickets</th></tr></thead><tbody>${bowl.map(p=>`<tr><td>${esc(p.bowler?.name||p.name||p.bowler||"—")}</td><td>${esc(p.o??p.overs??"—")}</td><td>${esc(p.r??p.runs??"—")}</td><td>${esc(p.w??p.wickets??"—")}</td></tr>`).join("")}</tbody></table>`:""}`}).join("");}catch(e){$("#scorecard").innerHTML=`<div class="empty">${esc(e.message)}</div>`;}}
+$("#matches").addEventListener("click",e=>{const card=e.target.closest("[data-index]");if(card)selectMatch(Number(card.dataset.index));});loadMatches();setInterval(loadMatches,REFRESH_MS);
+</script></body></html>

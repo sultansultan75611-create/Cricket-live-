@@ -1,43 +1,23 @@
-# Boundary — Live Cricket Website
+# Cricket Live — live API starter
 
-A responsive cricket scores website using CricketData API v1.
-
-## Requirements
-- Node.js 18 or newer (includes `fetch`)
-- A CricketData API key
+This starter connects the Cricket Live site to Cricket Data (formerly CricAPI).
 
 ## Setup
-1. Install Node.js.
-2. Extract this project folder.
-3. Open a terminal in the folder.
-4. Run `npm install`.
-5. Copy `.env.example` to `.env`.
-6. Put your newly generated API key in `.env`:
-   `CRICKET_API_KEY=your_key_here`
-7. Run `npm start`.
-8. Open `http://localhost:3000`.
+1. Create an API account at https://cricketdata.org/ (if account registration is permitted under the provider's terms; otherwise ask a parent/guardian to help).
+2. Install Node.js 18 or newer.
+3. Copy `.env.example` to `.env` and add your API key.
+4. Run `npm install`, then `npm start`.
+5. Open http://localhost:3000
 
-## Features
-- Current matches from `/v1/currentMatches`
-- Filters for live, upcoming and completed matches based on API flags
-- Search by team, series or venue
-- Match details via `/v1/match_info?id=...`
-- Automatic refresh every 60 seconds
-- Responsive dark sports dashboard
+**Keep the API key private.** It belongs only in `.env` on the server. Do not put it in the HTML file, publish it in a repository, or send it in chat.
 
-## Security
-Never commit `.env` or put the API key in browser JavaScript. The Express server keeps the key on the server. Use HTTPS and configure environment variables with your hosting provider when deploying.
+## Routes
+- `GET /api/matches` proxies the provider's `currentMatches` endpoint.
+- `GET /api/scorecard/:matchId` proxies `match_scorecard`.
+- `GET /api/health` confirms whether a key is configured without revealing it.
 
-## API notes
-The site displays fields returned by your API. Availability of match details, innings scores and team logos depends on the provider's response and your API plan. The current API response is not guaranteed to include ball-by-ball data.
+## Free-tier usage
+Cricket Data currently advertises 100 requests/day for its basic current-matches endpoint. This starter refreshes every 20 minutes (about 72 match-list requests/day if left open continuously), leaving some room for scorecard calls. Confirm current quotas and terms in your provider account.
 
-
-## Deploy free on Render
-1. Push this project to a private GitHub repository. Do not upload `.env`; use `.env.example` only as a template.
-2. In Render, choose New > Web Service and connect the private GitHub repository.
-3. Set Build Command to `npm install` and Start Command to `npm start`.
-4. Choose the Free instance plan.
-5. In Environment Variables, add `CRICKET_API_KEY` with your newly generated API key. Never put the key in frontend files or commit it.
-6. Create the service and wait for deployment to finish. Open the `onrender.com` URL shown in the dashboard.
-
-The included `render.yaml` describes the service, but add the secret `CRICKET_API_KEY` in the Render dashboard. Free services may sleep after inactivity and can take a little time to wake up.
+## Notes
+The live connection will only work after a valid key is added and the Node server is run/deployed. I cannot verify live responses without an account key. Provider fields may differ between matches; unavailable fields are labelled unavailable, not invented.
