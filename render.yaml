@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: cricket-live
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: CRICKET_API_KEY
+        sync: false

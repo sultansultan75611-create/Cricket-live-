@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08131f">
+  <meta name="description" content="Live cricket scores, match updates and scorecards.">
+  <title>Boundary — Live Cricket</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="topline"></div>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="Boundary home">
+      <span class="brand-mark">B</span><span>BOUNDARY<span class="brand-dot">.</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a class="nav-link active" href="#scores">Scores</a>
+      <a class="nav-link" href="#scores" data-filter-link="live">Live</a>
+      <a class="nav-link" href="#scores" data-filter-link="upcoming">Upcoming</a>
+      <a class="nav-link" href="#scores" data-filter-link="completed">Results</a>
+    </nav>
+    <div class="header-right">
+      <span class="live-indicator"><i></i> LIVE CENTER</span>
+      <button class="icon-button" id="refreshBtn" title="Refresh scores" aria-label="Refresh scores">↻</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> THE GAME, IN REAL TIME</p>
+        <h1>Every run.<br><span>Every moment.</span></h1>
+        <p class="hero-sub">Your home for live cricket scores, match updates and results from around the world.</p>
+        <a class="hero-cta" href="#scores">Explore matches <span>↘</span></a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="ball"><span></span></div>
+        <div class="art-caption">FOLLOW<br>THE GAME</div>
+        <div class="art-number">01<span>/</span>LIVE</div>
+      </div>
+    </section>
+
+    <section class="ticker" aria-label="Cricket updates">
+      <span class="ticker-label"><i></i> SCOREBOARD</span>
+      <span class="ticker-text">The latest matches, all in one place</span>
+      <span class="ticker-date" id="todayLabel">—</span>
+    </section>
+
+    <section class="scores-section" id="scores">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">DON'T MISS A BALL</p>
+          <h2>Match centre<span class="green-period">.</span></h2>
+        </div>
+        <div class="update-note"><span class="pulse"></span><span id="lastUpdated">Connecting to live scores…</span></div>
+      </div>
+
+      <div class="toolbar">
+        <div class="filter-tabs" role="group" aria-label="Filter matches">
+          <button class="filter-tab active" data-filter="all">All matches</button>
+          <button class="filter-tab" data-filter="live">Live</button>
+          <button class="filter-tab" data-filter="upcoming">Upcoming</button>
+          <button class="filter-tab" data-filter="completed">Results</button>
+        </div>
+        <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search teams or series…" autocomplete="off"></label>
+      </div>
+
+      <div id="errorBox" class="notice error hidden" role="alert"></div>
+      <div id="loadingBox" class="loading-state"><span class="spinner"></span><p>Fetching the latest matches…</p></div>
+      <div id="emptyBox" class="empty-state hidden"><div class="empty-icon">🏏</div><h3>No matches found</h3><p>Try another filter or check back later.</p></div>
+      <div id="matchesGrid" class="matches-grid"></div>
+      <div class="section-foot"><span>DATA POWERED BY CRICKETDATA</span><span>Scores refresh automatically every 60 seconds</span></div>
+    </section>
+
+    <section class="feature-strip">
+      <div><span class="feature-icon">◎</span><h3>Live updates</h3><p>Follow match status and score changes.</p></div>
+      <div><span class="feature-icon">▤</span><h3>Match details</h3><p>Open a match for its available scorecard information.</p></div>
+      <div><span class="feature-icon">◷</span><h3>Always current</h3><p>Refresh scores whenever you need them.</p></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a class="brand footer-brand" href="#"><span class="brand-mark">B</span><span>BOUNDARY<span class="brand-dot">.</span></span></a>
+    <p>Made for the love of cricket.</p>
+    <span>© <span id="year"></span> BOUNDARY</span>
+  </footer>
+
+  <dialog id="matchDialog" class="match-dialog">
+    <div class="dialog-head"><span class="eyebrow">MATCH DETAILS</span><button id="closeDialog" class="icon-button" aria-label="Close">×</button></div>
+    <div id="dialogContent"><p>Loading match details…</p></div>
+  </dialog>
+  <script src="app.js"></script>
+</body>
+</html>
